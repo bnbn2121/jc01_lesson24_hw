@@ -5,7 +5,7 @@ import com.edu.less17.institute.model.TrainingCourse;
 import com.edu.less17.institute.service.Service;
 import com.edu.less17.institute.service.ServiceException;
 import com.edu.less17.institute.service.ServiceProvider;
-import com.edu.less17.institute.util.StringParser;
+import com.edu.less17.institute.util.CommandParser;
 
 public class AddCourse implements Command{
 	private Service service = ServiceProvider.getService();
@@ -13,7 +13,7 @@ public class AddCourse implements Command{
 	@Override
 	public String execute(String request) {
 		String response = null;
-		String data = StringParser.getCommandData(request);
+		String data = CommandParser.getCommandData(request);
 		TrainingCourse course = new TrainingCourse().getCourseFromString(data);
 		try {
 		service.addCourse(course);

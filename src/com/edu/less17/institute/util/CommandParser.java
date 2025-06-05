@@ -1,6 +1,6 @@
 package com.edu.less17.institute.util;
 
-public class StringParser {
+public class CommandParser {
 	public static String getCommandName(String request) {
 		String delimeter = "\n";
 		String commandName = request.substring(0,request.indexOf(delimeter));
