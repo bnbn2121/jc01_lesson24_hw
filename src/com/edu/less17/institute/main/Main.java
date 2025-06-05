@@ -28,7 +28,7 @@ public class Main {
 		students.add(new Student("Роман", "НД-09-1"));
 		students.add(new Student("Алина", "РН-09-3"));
 		students.add(new Student("Степан", "РН-09-4"));
-		students.add(new Student("Владислав", "НД-09-1"));
+		students.add(new Student("Валерий", "НД-09-1"));
 
 		//создаем курс
 		TrainingCourse course1 = ServiceImpl.createTrainingCourse();
