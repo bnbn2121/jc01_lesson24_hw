@@ -22,7 +22,7 @@ public interface Service {
 		return trainingCourse;
 	}
 	
-	public void addCourse(TrainingCourse course) throws ServiceException;
+	public void saveCourse(TrainingCourse course) throws ServiceException;
 	
 	public void removeCourseById(int id) throws ServiceException;
 	
@@ -30,13 +30,13 @@ public interface Service {
 	
 	public void conductLesson(int id) throws ServiceException;
 	
-	public String getCourseInfo(TrainingCourse course);
-	
 	public String getStudentsByAlphabet(TrainingCourse course);
 	
 	public String getStudentsByAverageGrade(TrainingCourse course);
 	
 	public TrainingCourse getCourseById(int idCourse) throws ServiceException;
 	
-	public void addStudent(Student student, int idCourse) throws ServiceException;
+	public String getCourseInfo(TrainingCourse course);
+	
+	public void addStudent(Student student, TrainingCourse course) throws ServiceException;
 }

@@ -87,7 +87,8 @@ public class TrainingCourse {
 		sb.append(String.format("id: %d\n", id));
 		sb.append(String.format("specialization: %s\n", specialization));
 		sb.append("staff:\n");
-		for (Person p : staff) {
+		for (Staff s : staff) {
+			Person p = (Person) s;
 			sb.append(p.getName()).append(" (").append(p.getClass().getSimpleName()).append(")")
 					.append("\n");
 		}
@@ -99,11 +100,11 @@ public class TrainingCourse {
 	}
 
 	public void conductLesson() {
-		for (Person person : staff) {
-			person.doSomething();
+		for (CourseMember member : staff) {	
+			member.lessonAction();
 		}
-		for (Person person : students) {
-			person.doSomething();
+		for (CourseMember member : students) {
+			member.lessonAction();
 		}
 	}
 
@@ -114,54 +115,6 @@ public class TrainingCourse {
 		}
 		double result = ((int) (sum / students.size() * 10)) / 10.0;
 		return result;
-	}
-	
-	public String getStringData() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("Course data:\n");
-		sb.append(String.format("id: %d\n", id));
-		sb.append(String.format("specialization: %s\n", specialization));
-		sb.append("staff:\n");
-		for (Staff s: staff) {
-			sb.append(s.getStringData()).append("\n");
-		}
-		sb.append("students:\n");
-		for (Student s: students) {
-			sb.append(s.getStringData()).append("\n");
-		}
-		sb.append("\n");
-		return sb.toString();
-	}
-	
-	public TrainingCourse getCourseFromString(String str) {
-		if (str==null) {
-			return null;
-		}
-		String[] dataArray = str.split("\n");
-		for (String oneLine: dataArray) {
-			oneLine = oneLine.trim();
-			if(oneLine.startsWith("id")) {
-				id = Integer.valueOf(oneLine.substring(4));
-				continue;
-			}
-			if(oneLine.startsWith("specialization")) {
-				specialization = oneLine.substring(16);
-				continue;
-			}
-			if(oneLine.startsWith("Student")) {
-				students.add(new Student().readDataFromString(oneLine));
-				continue;
-			}
-			if(oneLine.startsWith("Administrator")) {
-				staff.add(new Administrator().readDataFromString(oneLine));
-				continue;
-			}
-			if(oneLine.startsWith("Teacher")) {
-				staff.add(new Teacher().readDataFromString(oneLine));
-				continue;
-			}
-		}
-		return this;
 	}
 	
 	public String getStudentsByAlphabet() {

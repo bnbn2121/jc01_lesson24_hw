@@ -37,11 +37,11 @@ public class Student extends Person {
 	}
 	
 	@Override
-	public void doSomething() {
+	public void lessonAction() {
 		study();
 	}
 
-	public void study() {
+	private void study() {
 		System.out.println("я учусь (" + getClass().getSimpleName() + " " + getName() + ")");
 	}
 
@@ -64,25 +64,6 @@ public class Student extends Person {
 	
 	public void obfuscateName() {
 		this.setName("Данные скрыты");
-	}
-	
-	@Override
-	public String getStringData() {
-		return String.format("%8s | %14s | %7s | %s", getClass().getSimpleName(), getName(), group, grades);
-	}
-
-	@Override
-	public Student readDataFromString(String str) {
-		String[] data = str.split("\\|");
-		setName(data[1].trim());
-		setGroup(data[2].trim());
-		String[] gradesArray = data[3].trim().substring(1, data[3].trim().length()-1).split(", ");
-		ArrayList<Integer> grades = new ArrayList<Integer>();
-		for (String s : gradesArray) {
-			grades.add(Integer.valueOf(s));
-		}
-		setGrades(grades);
-		return this;
 	}
 
 	private List<Integer> hardcodeInitGrades() {

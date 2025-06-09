@@ -42,9 +42,9 @@ public class ServiceImpl implements Service {
 		return trainingCourse;
 	}
 
-	public void addCourse(TrainingCourse course) throws ServiceException {
+	public void saveCourse(TrainingCourse course) throws ServiceException {
 		try {
-			courses.addCourse(course);
+			courses.saveCourse(course);
 		} catch (DaoException e) {
 			throw new ServiceException(e);
 		}
@@ -97,16 +97,8 @@ public class ServiceImpl implements Service {
 		return currentCourse;
 	}
 
-	public void addStudent(Student student, int idCourse) throws ServiceException {
-		TrainingCourse currentCourse = null;
-		try {
-			currentCourse = courses.getCourseById(idCourse);
-			if (currentCourse != null) {
-				currentCourse.addStudent(student);
-			}
-		} catch (DaoException e) {
-			throw new ServiceException(e);
-		}
+	public void addStudent(Student student, TrainingCourse course) {
+				course.addStudent(student);
 	}
 
 }

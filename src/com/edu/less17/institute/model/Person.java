@@ -2,7 +2,7 @@ package com.edu.less17.institute.model;
 
 import java.util.Objects;
 
-public abstract class Person {
+public abstract class Person implements CourseMember{
 	private String name;
 
 	public Person() {
@@ -20,12 +20,6 @@ public abstract class Person {
 	public String getName() {
 		return name;
 	}
-
-	public abstract void doSomething();
-	
-	public abstract String getStringData();
-	
-	public abstract Person readDataFromString(String str);
 
 	@Override
 	public int hashCode() {

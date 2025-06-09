@@ -12,6 +12,7 @@ import com.edu.less17.institute.model.Teacher;
 import com.edu.less17.institute.model.TrainingCourse;
 import com.edu.less17.institute.service.ServiceException;
 import com.edu.less17.institute.service.ServiceImpl;
+import com.edu.less17.institute.ui.ConsoleUI;
 
 public class Main {
 
@@ -41,8 +42,8 @@ public class Main {
 		ControllerOld controller = ControllerOld.getInstance();
 		
 		//записываем данные о курсе в файл
-		controller.addCourse(course1);
-		controller.addCourse(course1);
+		controller.saveCourse(course1);
+		controller.saveCourse(course1);
 		
 		//читаем данные курса из файла
 		TrainingCourse course2 = controller.getCourseById(1);
@@ -55,12 +56,12 @@ public class Main {
 		course2.getStudents().get(1).obfuscateName();
 		
 		//добавляем второй курс в файл
-		controller.addCourse(course2);
-		controller.addCourse(course2);
-		controller.addCourse(course2);
+		controller.saveCourse(course2);
+		controller.saveCourse(course2);
+		controller.saveCourse(course2);
 		
 		//удаляем первый курс из файла
-		controller.removeCourseById(1);
+		//controller.removeCourseById(1);
 
 		//проводим урок
 		System.out.println("Проводим урок:");
@@ -83,12 +84,18 @@ public class Main {
 		//добавляю курс 4 для теста нового контроллера
 		TrainingCourse course4 = controller.getCourseById(3);
 		course4.setId(4);
-		controller.addCourse(course4);
+		controller.saveCourse(course4);
 		
 		//пробую новый контроллер
 		ControllerByString newController = new ControllerByString();
-		System.out.println(newController.doAction("removecoursebyid\n3"));
+		//System.out.println(newController.doAction("removecoursebyid\n3"));
 		System.out.println(newController.doAction("conductlesson\n4"));
+		System.out.println();
+		System.out.println(newController.doAction("getcourses"));
+		
+		ConsoleUI console = ConsoleUI.getConsoleUI();
+		console.start();
+		
 	}
 
 }

@@ -7,19 +7,20 @@ import com.edu.less17.institute.service.ServiceException;
 import com.edu.less17.institute.service.ServiceProvider;
 import com.edu.less17.institute.util.CommandParser;
 
-public class AddCourse implements Command{
+public class GetStudentsByAlphabet implements Command {
 	private Service service = ServiceProvider.getService();
 	
 	@Override
 	public String execute(String request) {
 		String response = null;
 		String data = CommandParser.getCommandData(request);
-		TrainingCourse course = new TrainingCourse().getCourseFromString(data);
+		int id = Integer.valueOf(data.trim());
+		TrainingCourse course = null;
 		try {
-		service.addCourse(course);
-		response = "Курс добавлен";
+			course = service.getCourseById(id);
+			response = service.getStudentsByAlphabet(course);
 		} catch (ServiceException e) {
-			response = "Ошибка при добавлении курса";
+			response = "failed to get list of students";
 		}
 		return response;
 	}

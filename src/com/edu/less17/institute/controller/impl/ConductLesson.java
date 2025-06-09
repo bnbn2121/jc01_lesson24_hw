@@ -16,9 +16,9 @@ public class ConductLesson implements Command {
 		int id = Integer.valueOf(data.trim());
 		try {
 			service.conductLesson(id);
-			response = "урок проведен";
+			response = "the lesson is done";
 		} catch (ServiceException e) {
-			response = "не удалось провести урок";
+			response = "failed to conduct the lesson";
 		}
 		return response;
 	}

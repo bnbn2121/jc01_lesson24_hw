@@ -30,8 +30,8 @@ private Service service = ServiceProvider.getService();
 		return trainingCourse;
 	}
 	
-	public void addCourse(TrainingCourse course) throws ServiceException {
-		service.addCourse(course);
+	public void saveCourse(TrainingCourse course) throws ServiceException {
+		service.saveCourse(course);
 	}
 	
 	public void removeCourseById(int id) throws ServiceException {

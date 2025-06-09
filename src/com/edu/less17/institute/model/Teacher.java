@@ -2,7 +2,7 @@ package com.edu.less17.institute.model;
 
 import java.util.Objects;
 
-public class Teacher extends Staff {
+public class Teacher extends Person implements Staff {
 	private String specialization;
 	
 	public Teacher() {
@@ -24,25 +24,12 @@ public class Teacher extends Staff {
 	}
 
 	@Override
-	public void doSomething() {
+	public void lessonAction() {
 		teach();
 	}
 	
-	public void teach() {
+	private void teach() {
 		System.out.println("я преподаю(" +getClass().getSimpleName()+ " " + getName()+")");
-	}
-	
-	@Override
-	public String getStringData() {
-		return String.format("%15s | %s | %s", getClass().getSimpleName(), getName(), specialization);
-	}
-	
-	@Override
-	public Teacher readDataFromString(String str) {
-		String[] data = str.split("\\|");
-		setName(data[1].trim());
-		setSpecialization(data[2].trim());
-		return this;
 	}
 
 	@Override
