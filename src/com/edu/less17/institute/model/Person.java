@@ -2,11 +2,11 @@ package com.edu.less17.institute.model;
 
 import java.util.Objects;
 
-public abstract class Person implements CourseMember{
+public abstract class Person implements CourseMember {
 	private String name;
 
 	public Person() {
-		this.name = "Неизвестная личность";
+		this.name = "Unknown person";
 	}
 
 	public Person(String name) {

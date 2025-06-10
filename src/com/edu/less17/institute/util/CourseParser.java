@@ -10,8 +10,9 @@ import com.edu.less17.institute.model.Teacher;
 import com.edu.less17.institute.model.TrainingCourse;
 
 public class CourseParser {
-	private CourseParser() {}
-	
+	private CourseParser() {
+	}
+
 	public static TrainingCourse getCourseFromString(String stringCourseData) {
 		if (stringCourseData == null) {
 			return null;
@@ -49,9 +50,9 @@ public class CourseParser {
 		}
 		return course;
 	}
-	
-	public static String getStringData(TrainingCourse course) {	
-		if (course==null) {
+
+	public static String getStringData(TrainingCourse course) {
+		if (course == null) {
 			return null;
 		}
 		StringBuilder sb = new StringBuilder();
@@ -59,32 +60,40 @@ public class CourseParser {
 		sb.append(String.format("id: %d\n", course.getId()));
 		sb.append(String.format("specialization: %s\n", course.getSpecialization()));
 		sb.append("staff:\n");
-		for (Staff s: course.getStaff()) {
-			sb.append(ParserFactory.getParser(s.getClass()).parseToString((Person)s)).append("\n");
+		for (Staff s : course.getStaff()) {
+			sb.append(ParserFactory.getParser(s.getClass()).parseToString((Person) s)).append("\n");
 		}
 		sb.append("students:\n");
-		for (Student s: course.getStudents()) {
+		for (Student s : course.getStudents()) {
 			sb.append(ParserFactory.getParser(s.getClass()).parseToString(s)).append("\n");
 		}
 		sb.append("***\n");
 		return sb.toString();
 	}
-	
-	public static String getStringData(List<TrainingCourse> courses) {	
+
+	public static String getStringData(List<TrainingCourse> courses) {
 		StringBuilder sb = new StringBuilder();
 		for (TrainingCourse course : courses) {
 			sb.append("Course data:\n");
 			sb.append(String.format("id: %d\n", course.getId()));
 			sb.append(String.format("specialization: %s\n", course.getSpecialization()));
 			sb.append("staff:\n");
-			for (Staff s: course.getStaff()) {
-				sb.append(ParserFactory.getParser(s.getClass()).parseToString((Person)s)).append("\n");
+			for (Staff s : course.getStaff()) {
+				sb.append(ParserFactory.getParser(s.getClass()).parseToString((Person) s)).append("\n");
 			}
 			sb.append("students:\n");
-			for (Student s: course.getStudents()) {
+			for (Student s : course.getStudents()) {
 				sb.append(ParserFactory.getParser(s.getClass()).parseToString(s)).append("\n");
 			}
 			sb.append("***\n");
+		}
+		return sb.toString();
+	}
+
+	public static String getStringStudents(List<Student> students) {
+		StringBuilder sb = new StringBuilder();
+		for (Student student : students) {
+			sb.append(ParserFactory.getParser(student.getClass()).parseToString(student)).append("\n");
 		}
 		return sb.toString();
 	}

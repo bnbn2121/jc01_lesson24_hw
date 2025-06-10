@@ -31,6 +31,6 @@ public class ParserFactory {
 			}
 			return parserMap.get(Teacher.class);
 		}
-		throw new IllegalArgumentException("Неизвестный тип Person: " + personClass.getSimpleName());
+		throw new IllegalArgumentException("Unknown type Person: " + personClass.getSimpleName());
 	}
 }

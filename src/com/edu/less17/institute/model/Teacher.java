@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Teacher extends Person implements Staff {
 	private String specialization;
-	
+
 	public Teacher() {
 		super();
 		specialization = "нет данных";
@@ -24,12 +24,13 @@ public class Teacher extends Person implements Staff {
 	}
 
 	@Override
-	public void lessonAction() {
-		teach();
+	public String lessonAction() {
+		return teach();
 	}
-	
-	private void teach() {
-		System.out.println("я преподаю(" +getClass().getSimpleName()+ " " + getName()+")");
+
+	private String teach() {
+		String actionResult = "I'm teaching (" + getClass().getSimpleName() + " " + getName() + ")";
+		return actionResult;
 	}
 
 	@Override
@@ -56,6 +57,5 @@ public class Teacher extends Person implements Staff {
 	public String toString() {
 		return "Teacher [" + (specialization != null ? "specialization=" + specialization : "") + "]";
 	}
-	
-	
+
 }

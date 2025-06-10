@@ -31,13 +31,13 @@ public class ServiceImpl implements Service {
 		this.courses = courses;
 	}
 
-	public static TrainingCourse createTrainingCourse(String specialization, int id, List<Student> students,
+	public TrainingCourse createTrainingCourse(String specialization, int id, List<Student> students,
 			List<Staff> staff) {
 		TrainingCourse trainingCourse = new TrainingCourse(specialization, id, students, staff);
 		return trainingCourse;
 	}
 
-	public static TrainingCourse createTrainingCourse() {
+	public TrainingCourse createTrainingCourse() {
 		TrainingCourse trainingCourse = new TrainingCourse();
 		return trainingCourse;
 	}
@@ -66,10 +66,10 @@ public class ServiceImpl implements Service {
 		}
 	}
 
-	public void conductLesson(int id) throws ServiceException {
+	public String conductLesson(int id) throws ServiceException {
 		try {
 			TrainingCourse course = courses.getCourseById(id);
-			course.conductLesson();
+			return course.conductLesson();
 		} catch (DaoException e) {
 			throw new ServiceException(e);
 		}
@@ -79,11 +79,11 @@ public class ServiceImpl implements Service {
 		return course.getInfo();
 	}
 
-	public String getStudentsByAlphabet(TrainingCourse course) {
+	public List<Student> getStudentsByAlphabet(TrainingCourse course) {
 		return course.getStudentsByAlphabet();
 	}
 
-	public String getStudentsByAverageGrade(TrainingCourse course) {
+	public List<Student> getStudentsByAverageGrade(TrainingCourse course) {
 		return course.getStudentsByAverageGrade();
 	}
 
@@ -98,7 +98,7 @@ public class ServiceImpl implements Service {
 	}
 
 	public void addStudent(Student student, TrainingCourse course) {
-				course.addStudent(student);
+		course.addStudent(student);
 	}
 
 }

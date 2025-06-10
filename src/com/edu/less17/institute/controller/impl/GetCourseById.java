@@ -20,7 +20,7 @@ public class GetCourseById implements Command {
 		try {
 			course = service.getCourseById(id);
 			response = CourseParser.getStringData(course);
-			if(response==null) {
+			if (response == null) {
 				response = "not correct data";
 			}
 		} catch (ServiceException e) {

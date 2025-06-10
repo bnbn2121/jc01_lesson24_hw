@@ -11,8 +11,8 @@ import com.edu.less17.institute.ui.impl.ShowCourseById;
 import com.edu.less17.institute.ui.impl.ShowStudentsOfTheCourse;
 
 public class ConsoleCommandProvider {
-private final Map<Integer, ConsoleCommand> map;
-	
+	private final Map<Integer, ConsoleCommand> map;
+
 	public ConsoleCommandProvider() {
 		map = new HashMap<Integer, ConsoleCommand>();
 		map.put(1, new AddNewCourse());
@@ -21,9 +21,9 @@ private final Map<Integer, ConsoleCommand> map;
 		map.put(4, new RemoveCourseById());
 		map.put(5, new AddStudentToCourse());
 		map.put(6, new ShowStudentsOfTheCourse());
-		
+
 	}
-	
+
 	public ConsoleCommand getCommand(int id) {
 		ConsoleCommand command = map.get(id);
 		return command;

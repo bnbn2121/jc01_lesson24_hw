@@ -6,25 +6,25 @@ import com.edu.less17.institute.controller.ControllerByString;
 
 public class ConsoleUI {
 	private static ConsoleUI console;
-    private ControllerByString controller;
-    private static Scanner scanner = new Scanner(System.in);
-    private ConsoleCommandProvider consoleCommandProvider;
+	private ControllerByString controller;
+	private static Scanner scanner = new Scanner(System.in);
+	private ConsoleCommandProvider consoleCommandProvider;
 
-    private ConsoleUI() {
-        this.controller = ControllerByString.getController();
-        this.consoleCommandProvider = new ConsoleCommandProvider();
-    }
+	private ConsoleUI() {
+		this.controller = ControllerByString.getController();
+		this.consoleCommandProvider = new ConsoleCommandProvider();
+	}
 
-    public static ConsoleUI getConsoleUI() {
-        if (console == null) {
-            console = new ConsoleUI();
-        }
-        return console;
-    }
+	public static ConsoleUI getConsoleUI() {
+		if (console == null) {
+			console = new ConsoleUI();
+		}
+		return console;
+	}
 
 	public void start() {
 		while (true) {
-			System.out.println("\nMenu:");
+			System.out.println("Menu:");
 			System.out.println("1.Add new course");
 			System.out.println("2.Show available courses");
 			System.out.println("3.Show course by id");
@@ -39,7 +39,7 @@ public class ConsoleUI {
 				break;
 			} else {
 				String request = consoleCommandProvider.getCommand(input).getStringRequest();
-				System.out.println(controller.doAction(request));
+				System.out.println(controller.doAction(request) + "\n");
 			}
 		}
 

@@ -12,7 +12,7 @@ import com.edu.less17.institute.util.CourseWriter;
 
 public class FileCourseRepository implements CourseRepository {
 
-	URL location = Main.class.getProtectionDomain().getCodeSource().getLocation();
+	private final URL location = Main.class.getProtectionDomain().getCodeSource().getLocation();
 	private final String DATA_PATH = location.getPath() + "resources/courseData.txt";
 	private CourseWriter writer = new CourseWriter();
 	private CourseReader reader = new CourseReader();
@@ -26,10 +26,10 @@ public class FileCourseRepository implements CourseRepository {
 		for (int i = 0; i < courses.size(); i++) {
 			if (courses.get(i).getId() == course.getId()) {
 				courses.set(i, course);
-				courseResaved=true;
+				courseResaved = true;
 			}
 		}
-		if(!courseResaved) {
+		if (!courseResaved) {
 			courses.add(course);
 		}
 		try {

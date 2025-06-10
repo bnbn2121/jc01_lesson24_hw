@@ -1,8 +1,7 @@
 package com.edu.less17.institute.model;
 
 public class Administrator extends Person implements Staff {
-	
-	
+
 	public Administrator() {
 	}
 
@@ -11,15 +10,15 @@ public class Administrator extends Person implements Staff {
 	}
 
 	@Override
-	public void lessonAction() {
-		administrate();
+	public String lessonAction() {
+		return administrate();
 	}
 
-	private void administrate() {
-		System.out.println("я управляю(" +getClass().getSimpleName()+ " " + getName()+")");
+	private String administrate() {
+		String actionResult = "I'm administrating (" + getClass().getSimpleName() + " " + getName() + ")";
+		return actionResult;
 	}
-	
-	
+
 	@Override
 	public int hashCode() {
 		return super.hashCode();
@@ -40,5 +39,5 @@ public class Administrator extends Person implements Staff {
 	public String toString() {
 		return "Administrator []";
 	}
-	
+
 }

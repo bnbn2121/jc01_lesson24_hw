@@ -8,7 +8,7 @@ import com.edu.less17.institute.util.CommandParser;
 
 public class CommandProvider {
 	private final Map<CommandName, Command> map;
-	
+
 	public CommandProvider() {
 		map = new HashMap<CommandName, Command>();
 		map.put(CommandName.SAVECOURSE, new SaveCourse());
@@ -20,7 +20,7 @@ public class CommandProvider {
 		map.put(CommandName.GETCOURSEBYID, new GetCourseById());
 		map.put(CommandName.ADDSTUDENT, new AddStudent());
 	}
-	
+
 	public Command getCommand(String request) {
 		CommandName commandName = CommandName.valueOf(CommandParser.getCommandName(request).toUpperCase());
 		Command command = map.get(commandName);

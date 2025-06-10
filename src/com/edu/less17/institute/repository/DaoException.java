@@ -1,6 +1,6 @@
 package com.edu.less17.institute.repository;
 
-public class DaoException extends Exception{
+public class DaoException extends Exception {
 
 	/**
 	 * 
@@ -22,6 +22,5 @@ public class DaoException extends Exception{
 	public DaoException(Exception e) {
 		super(e);
 	}
-	
 
 }

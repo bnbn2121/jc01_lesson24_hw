@@ -15,8 +15,7 @@ public class ConductLesson implements Command {
 		String data = CommandParser.getCommandData(request);
 		int id = Integer.valueOf(data.trim());
 		try {
-			service.conductLesson(id);
-			response = "the lesson is done";
+			response = service.conductLesson(id);
 		} catch (ServiceException e) {
 			response = "failed to conduct the lesson";
 		}

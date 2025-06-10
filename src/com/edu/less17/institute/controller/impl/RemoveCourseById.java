@@ -7,9 +7,9 @@ import com.edu.less17.institute.service.ServiceException;
 import com.edu.less17.institute.service.ServiceProvider;
 import com.edu.less17.institute.util.CommandParser;
 
-public class RemoveCourseById implements Command{
+public class RemoveCourseById implements Command {
 	private Service service = ServiceProvider.getService();
-	
+
 	@Override
 	public String execute(String request) {
 		String response = null;
@@ -17,7 +17,7 @@ public class RemoveCourseById implements Command{
 		int id = Integer.valueOf(data.trim());
 		try {
 			TrainingCourse course = service.getCourseById(id);
-			if (course==null) {
+			if (course == null) {
 				response = "not correct id";
 			} else {
 				service.removeCourseById(id);

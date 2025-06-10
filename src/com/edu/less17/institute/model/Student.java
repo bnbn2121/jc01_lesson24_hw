@@ -35,14 +35,15 @@ public class Student extends Person {
 	public void setGrades(ArrayList<Integer> grades) {
 		this.grades = grades;
 	}
-	
+
 	@Override
-	public void lessonAction() {
-		study();
+	public String lessonAction() {
+		return study();
 	}
 
-	private void study() {
-		System.out.println("я учусь (" + getClass().getSimpleName() + " " + getName() + ")");
+	private String study() {
+		String actionResult = "I'm studying (" + getClass().getSimpleName() + " " + getName() + ")";
+		return actionResult;
 	}
 
 	public double getAverageGrade() {
@@ -61,7 +62,7 @@ public class Student extends Person {
 	public void addGrade(int grade) {
 		grades.add(grade);
 	}
-	
+
 	public void obfuscateName() {
 		this.setName("Данные скрыты");
 	}

@@ -12,7 +12,7 @@ public class TrainingCourse {
 	private List<Staff> staff;
 
 	public TrainingCourse() {
-		this.specialization = "Нет специализации";
+		this.specialization = "No specialization";
 		this.id = 0;
 		this.students = new ArrayList<Student>();
 		this.staff = new ArrayList<Staff>();
@@ -25,7 +25,6 @@ public class TrainingCourse {
 		this.staff = staff;
 	}
 
-	
 	public String getSpecialization() {
 		return specialization;
 	}
@@ -65,11 +64,11 @@ public class TrainingCourse {
 			throw new RuntimeException("Не удалось добавить студента");
 		}
 	}
-	
+
 	public void addStaff(Staff newStaff) {
 		boolean isPresent = false;
-		for(Staff s:staff) {
-			if(s.getClass().isInstance(newStaff)||newStaff.getClass().isInstance(s)) {
+		for (Staff s : staff) {
+			if (s.getClass().isInstance(newStaff) || newStaff.getClass().isInstance(s)) {
 				isPresent = true;
 				break;
 			}
@@ -89,8 +88,7 @@ public class TrainingCourse {
 		sb.append("staff:\n");
 		for (Staff s : staff) {
 			Person p = (Person) s;
-			sb.append(p.getName()).append(" (").append(p.getClass().getSimpleName()).append(")")
-					.append("\n");
+			sb.append(p.getName()).append(" (").append(p.getClass().getSimpleName()).append(")").append("\n");
 		}
 		sb.append("students:\n");
 		for (Person p : students) {
@@ -99,13 +97,16 @@ public class TrainingCourse {
 		return sb.toString();
 	}
 
-	public void conductLesson() {
-		for (CourseMember member : staff) {	
-			member.lessonAction();
+	public String conductLesson() {
+		StringBuilder sb = new StringBuilder();
+		for (CourseMember member : staff) {
+			sb.append(member.lessonAction()).append("\n");
 		}
 		for (CourseMember member : students) {
-			member.lessonAction();
+			sb.append(member.lessonAction()).append("\n");
 		}
+		sb.append("the lesson is done\n");
+		return sb.toString();
 	}
 
 	public double getAverageCourseGrade() {
@@ -116,27 +117,18 @@ public class TrainingCourse {
 		double result = ((int) (sum / students.size() * 10)) / 10.0;
 		return result;
 	}
-	
-	public String getStudentsByAlphabet() {
+
+	public List<Student> getStudentsByAlphabet() {
 		List<Student> sortedStudents = new ArrayList<Student>(students);
 		Collections.sort(sortedStudents, new ComparatorByAlphabet());
-		StringBuilder sb = new StringBuilder();
-		sb.append("students by alphabet:\n");
-		for (Student s: sortedStudents) {
-			sb.append(String.format("%s - %.1f", s.getName(), s.getAverageGrade())).append("\n");
-		}
-		return sb.toString();
+		return sortedStudents;
 	}
-	
-	public String getStudentsByAverageGrade() {
+
+	public List<Student> getStudentsByAverageGrade() {
 		List<Student> sortedStudents = new ArrayList<Student>(students);
 		Collections.sort(sortedStudents, new ComparatorByAvearageGrade());
-		StringBuilder sb = new StringBuilder();
-		sb.append("students by average grade:\n");
-		for (Student s: sortedStudents) {
-			sb.append(String.format("%s - %.1f", s.getName(), s.getAverageGrade())).append("\n");
-		}
-		return sb.toString();
+
+		return sortedStudents;
 	}
 
 	@Override
@@ -164,5 +156,4 @@ public class TrainingCourse {
 				+ (staff != null ? "staff=" + staff : "") + "]";
 	}
 
-	
 }

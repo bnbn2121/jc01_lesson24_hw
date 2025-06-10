@@ -13,8 +13,8 @@ public class AddStudentToCourse implements ConsoleCommand {
 		sb.append(CommandName.ADDSTUDENT).append("\n");
 		String studentName = ConsoleUI.userStringInput("enter student's name");
 		String studentGroup = ConsoleUI.userStringInput("enter student's group");
-		sb.append(
-				String.format("%8s | %14s | %7s | %s", Student.class.getSimpleName(), studentName, studentGroup, null));
+		sb.append(String.format("%8s | %14s | %7s | %.1f | %s", Student.class.getSimpleName(), studentName,
+				studentGroup, null, null));
 		sb.append("\n");
 		int courseId = ConsoleUI.userIntInput("enter course id to add student", 9999);
 		sb.append(courseId);

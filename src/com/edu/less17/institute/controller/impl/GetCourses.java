@@ -17,8 +17,8 @@ public class GetCourses implements Command {
 		String response = null;
 		List<TrainingCourse> courses = null;
 		try {
-		courses = service.getCourses();
-		response = CourseParser.getStringData(courses);
+			courses = service.getCourses();
+			response = CourseParser.getStringData(courses);
 		} catch (ServiceException e) {
 			response = "Error getting list of courses";
 		}

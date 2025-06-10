@@ -23,9 +23,13 @@ public class AddStudent implements Command {
 		int courseId = Integer.valueOf(dataArray[1].trim());
 		try {
 			TrainingCourse course = service.getCourseById(courseId);
-			service.addStudent(student, course);
-			service.saveCourse(course);
-			response = "Student added";
+			if (course == null) {
+				response = "not correct id";
+			} else {
+				service.addStudent(student, course);
+				service.saveCourse(course);
+				response = "Student added";
+			}
 		} catch (ServiceException e) {
 			response = "Failed to add student";
 		}

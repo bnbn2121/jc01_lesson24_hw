@@ -11,19 +11,19 @@ import com.edu.less17.institute.model.Student;
 import com.edu.less17.institute.model.Teacher;
 import com.edu.less17.institute.model.TrainingCourse;
 import com.edu.less17.institute.service.ServiceException;
-import com.edu.less17.institute.service.ServiceImpl;
 import com.edu.less17.institute.ui.ConsoleUI;
+import com.edu.less17.institute.util.CourseParser;
 
 public class Main {
 
 	public static void main(String[] args) throws ServiceException {
-		
-		//создаем персонал
+
+		// создаем персонал
 		List<Staff> staff = new ArrayList<>();
 		staff.add(new Teacher("Виктор Олегович", "История"));
 		staff.add(new Administrator("Олег Олегович"));
-		
-		//создаем студентов
+
+		// создаем студентов
 		List<Student> students = new ArrayList<>();
 		students.add(new Student("Игорь", "РН-09-3"));
 		students.add(new Student("Роман", "НД-09-1"));
@@ -31,71 +31,71 @@ public class Main {
 		students.add(new Student("Степан", "РН-09-4"));
 		students.add(new Student("Валерий", "НД-09-1"));
 
-		//создаем курс
-		TrainingCourse course1 = ServiceImpl.createTrainingCourse();
+		// создаем курс
+		TrainingCourse course1 = new TrainingCourse();
 		course1.setId(1);
 		course1.setSpecialization("История");
 		course1.setStaff(staff);
 		course1.setStudents(students);
 
-		//создаем репозиторий, сервис и контроллер
+		// создаем репозиторий, сервис и контроллер
 		ControllerOld controller = ControllerOld.getInstance();
-		
-		//записываем данные о курсе в файл
+
+		// записываем данные о курсе в файл
 		controller.saveCourse(course1);
 		controller.saveCourse(course1);
-		
-		//читаем данные курса из файла
+
+		// читаем данные курса из файла
 		TrainingCourse course2 = controller.getCourseById(1);
-		
-		//проводим изменение данных в курсе
+
+		// проводим изменение данных в курсе
 		course2.setId(3);
 		course2.addStudent(new Student("Анна", "НД-09-1"));
-		
-		//обфусцируем данные студента
-		course2.getStudents().get(1).obfuscateName();
-		
-		//добавляем второй курс в файл
-		controller.saveCourse(course2);
-		controller.saveCourse(course2);
-		controller.saveCourse(course2);
-		
-		//удаляем первый курс из файла
-		//controller.removeCourseById(1);
 
-		//проводим урок
+		// обфусцируем данные студента
+		course2.getStudents().get(1).obfuscateName();
+
+		// добавляем второй курс в файл
+		controller.saveCourse(course2);
+		controller.saveCourse(course2);
+		controller.saveCourse(course2);
+
+		// удаляем первый курс из файла
+		controller.removeCourseById(1);
+
+		// проводим урок
 		System.out.println("Проводим урок:");
 		controller.conductLesson(3);
 		System.out.println();
-		
-		//Выводим информацию в консоль
+
+		// Выводим информацию в консоль
 		System.out.println("Информация о курсе1:");
 		System.out.println(controller.getCourseInfo(course1));
-		
+
 		System.out.println("Информация о курсе2:");
 		System.out.println(controller.getCourseInfo(controller.getCourseById(3)));
-		
+
 		System.out.println("Сортировка студентов по алфавиту:");
-		System.out.println(controller.getStudentsByAlphabet(course2));
-				
+		System.out.println(CourseParser.getStringStudents(controller.getStudentsByAlphabet(course2)));
+
 		System.out.println("Сортировка студентов по среднему баллу:");
-		System.out.println(controller.getStudentsByAverageGrade(course2));
-		
-		//добавляю курс 4 для теста нового контроллера
+		System.out.println(CourseParser.getStringStudents(controller.getStudentsByAverageGrade(course2)));
+
+		// добавляю курс 4 для теста нового контроллера
 		TrainingCourse course4 = controller.getCourseById(3);
 		course4.setId(4);
 		controller.saveCourse(course4);
-		
-		//пробую новый контроллер
+
+		// пробую новый контроллер
 		ControllerByString newController = new ControllerByString();
-		//System.out.println(newController.doAction("removecoursebyid\n3"));
+		System.out.println(newController.doAction("removecoursebyid\n3"));
 		System.out.println(newController.doAction("conductlesson\n4"));
 		System.out.println();
 		System.out.println(newController.doAction("getcourses"));
-		
+
 		ConsoleUI console = ConsoleUI.getConsoleUI();
 		console.start();
-		
+
 	}
 
 }

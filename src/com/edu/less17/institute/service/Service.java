@@ -12,31 +12,26 @@ public interface Service {
 
 	public void setCourseRepository(CourseRepository courses);
 
-	public static TrainingCourse createTrainingCourse(String specialization, int id, List<Student> students, List<Staff> staff) {
-		TrainingCourse trainingCourse = new TrainingCourse(specialization, id, students, staff);
-		return trainingCourse;
-	}
-	
-	public static TrainingCourse createTrainingCourse() {
-		TrainingCourse trainingCourse = new TrainingCourse();
-		return trainingCourse;
-	}
-	
+	public TrainingCourse createTrainingCourse(String specialization, int id, List<Student> students,
+			List<Staff> staff);
+
+	public TrainingCourse createTrainingCourse();
+
 	public void saveCourse(TrainingCourse course) throws ServiceException;
-	
+
 	public void removeCourseById(int id) throws ServiceException;
-	
+
 	public List<TrainingCourse> getCourses() throws ServiceException;
-	
-	public void conductLesson(int id) throws ServiceException;
-	
-	public String getStudentsByAlphabet(TrainingCourse course);
-	
-	public String getStudentsByAverageGrade(TrainingCourse course);
-	
+
+	public String conductLesson(int id) throws ServiceException;
+
+	public List<Student> getStudentsByAlphabet(TrainingCourse course);
+
+	public List<Student> getStudentsByAverageGrade(TrainingCourse course);
+
 	public TrainingCourse getCourseById(int idCourse) throws ServiceException;
-	
+
 	public String getCourseInfo(TrainingCourse course);
-	
+
 	public void addStudent(Student student, TrainingCourse course) throws ServiceException;
 }

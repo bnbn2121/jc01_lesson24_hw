@@ -18,9 +18,9 @@ public class SaveCourse implements Command {
 		TrainingCourse course = CourseParser.getCourseFromString(data);
 		try {
 			service.saveCourse(course);
-			response = "Курс добавлен";
+			response = "Course added";
 		} catch (ServiceException e) {
-			response = "Ошибка при добавлении курса";
+			response = "Error adding course";
 		}
 		return response;
 	}
