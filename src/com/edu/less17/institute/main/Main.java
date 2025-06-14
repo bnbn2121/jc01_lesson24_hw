@@ -3,14 +3,15 @@ package com.edu.less17.institute.main;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.edu.less17.institute.controller.ControllerOld;
 import com.edu.less17.institute.controller.ControllerByString;
 import com.edu.less17.institute.model.Administrator;
-import com.edu.less17.institute.model.Staff;
+import com.edu.less17.institute.model.CourseMember;
 import com.edu.less17.institute.model.Student;
 import com.edu.less17.institute.model.Teacher;
 import com.edu.less17.institute.model.TrainingCourse;
+import com.edu.less17.institute.service.Service;
 import com.edu.less17.institute.service.ServiceException;
+import com.edu.less17.institute.service.ServiceProvider;
 import com.edu.less17.institute.ui.ConsoleUI;
 import com.edu.less17.institute.util.CourseParser;
 
@@ -18,73 +19,73 @@ public class Main {
 
 	public static void main(String[] args) throws ServiceException {
 
+		List<CourseMember> courseMembers = new ArrayList<>();
+		
 		// создаем персонал
-		List<Staff> staff = new ArrayList<>();
-		staff.add(new Teacher("Виктор Олегович", "История"));
-		staff.add(new Administrator("Олег Олегович"));
+		courseMembers.add(new Teacher("Виктор Олегович", "История"));
+		courseMembers.add(new Administrator("Олег Олегович"));
 
 		// создаем студентов
-		List<Student> students = new ArrayList<>();
-		students.add(new Student("Игорь", "РН-09-3"));
-		students.add(new Student("Роман", "НД-09-1"));
-		students.add(new Student("Алина", "РН-09-3"));
-		students.add(new Student("Степан", "РН-09-4"));
-		students.add(new Student("Валерий", "НД-09-1"));
+		courseMembers.add(new Student("Игорь", "РН-09-3"));
+		courseMembers.add(new Student("Роман", "НД-09-1"));
+		courseMembers.add(new Student("Алина", "РН-09-3"));
+		courseMembers.add(new Student("Степан", "РН-09-4"));
+		courseMembers.add(new Student("Валерий", "НД-09-1"));
 
 		// создаем курс
 		TrainingCourse course1 = new TrainingCourse();
 		course1.setId(1);
 		course1.setSpecialization("История");
-		course1.setStaff(staff);
-		course1.setStudents(students);
+		course1.setCourseMembers(courseMembers);
 
 		// создаем репозиторий, сервис и контроллер
-		ControllerOld controller = ControllerOld.getInstance();
+		Service service = ServiceProvider.getService();
 
 		// записываем данные о курсе в файл
-		controller.saveCourse(course1);
-		controller.saveCourse(course1);
+		service.saveCourse(course1);
+		service.saveCourse(course1);
 
 		// читаем данные курса из файла
-		TrainingCourse course2 = controller.getCourseById(1);
+		TrainingCourse course2 = service.getCourseById(1);
 
 		// проводим изменение данных в курсе
 		course2.setId(3);
 		course2.addStudent(new Student("Анна", "НД-09-1"));
 
 		// обфусцируем данные студента
-		course2.getStudents().get(1).obfuscateName();
+		Student student = (Student) course2.getListeners().get(1);
+		student.obfuscateName();
 
 		// добавляем второй курс в файл
-		controller.saveCourse(course2);
-		controller.saveCourse(course2);
-		controller.saveCourse(course2);
+		service.saveCourse(course2);
+		service.saveCourse(course2);
+		service.saveCourse(course2);
 
 		// удаляем первый курс из файла
-		controller.removeCourseById(1);
+		service.removeCourseById(1);
 
 		// проводим урок
 		System.out.println("Проводим урок:");
-		controller.conductLesson(3);
+		service.conductLesson(3);
 		System.out.println();
 
 		// Выводим информацию в консоль
 		System.out.println("Информация о курсе1:");
-		System.out.println(controller.getCourseInfo(course1));
+		System.out.println(service.getCourseInfo(course1));
 
 		System.out.println("Информация о курсе2:");
-		System.out.println(controller.getCourseInfo(controller.getCourseById(3)));
+		System.out.println(service.getCourseInfo(service.getCourseById(3)));
 
 		System.out.println("Сортировка студентов по алфавиту:");
-		System.out.println(CourseParser.getStringStudents(controller.getStudentsByAlphabet(course2)));
+		System.out.println(CourseParser.getStringStudents(service.getStudentsByAlphabet(course2)));
 
 		System.out.println("Сортировка студентов по среднему баллу:");
-		System.out.println(CourseParser.getStringStudents(controller.getStudentsByAverageGrade(course2)));
+		System.out.println(CourseParser.getStringStudents(service.getStudentsByAverageGrade(course2)));
 
 		// добавляю курс 4 для теста нового контроллера
-		TrainingCourse course4 = controller.getCourseById(3);
+		TrainingCourse course4 = service.getCourseById(3);
 		course4.setId(4);
-		controller.saveCourse(course4);
+		service.saveCourse(course4);
 
 		// пробую новый контроллер
 		ControllerByString newController = new ControllerByString();

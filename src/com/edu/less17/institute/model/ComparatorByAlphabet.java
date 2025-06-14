@@ -2,11 +2,13 @@ package com.edu.less17.institute.model;
 
 import java.util.Comparator;
 
-public class ComparatorByAlphabet implements Comparator<Person> {
+public class ComparatorByAlphabet implements Comparator<Listener> {
 
 	@Override
-	public int compare(Person o1, Person o2) {
-		return o1.getName().compareToIgnoreCase(o2.getName());
+	public int compare(Listener l1, Listener l2) {
+		Person p1 = (Person) l1;
+		Person p2 = (Person) l2;
+		return p1.getName().compareToIgnoreCase(p2.getName());
 	}
 
 }

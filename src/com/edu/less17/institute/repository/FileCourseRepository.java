@@ -20,7 +20,7 @@ public class FileCourseRepository implements CourseRepository {
 	public FileCourseRepository() {
 	}
 
-	public void saveCourse(TrainingCourse course) throws DaoException {
+	public void saveCourse(TrainingCourse course) throws CourseRepositoryException {
 		List<TrainingCourse> courses = getCourses();
 		boolean courseResaved = false;
 		for (int i = 0; i < courses.size(); i++) {
@@ -35,11 +35,11 @@ public class FileCourseRepository implements CourseRepository {
 		try {
 			writer.writeToFile(courses, DATA_PATH);
 		} catch (IOException e) {
-			throw new DaoException(e);
+			throw new CourseRepositoryException(e);
 		}
 	}
 
-	public void removeCourseById(int id) throws DaoException {
+	public void removeCourseById(int id) throws CourseRepositoryException {
 		List<TrainingCourse> courses = null;
 		try {
 			courses = reader.getCourses(DATA_PATH);
@@ -52,21 +52,21 @@ public class FileCourseRepository implements CourseRepository {
 			}
 			writer.writeToFile(courses, DATA_PATH);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new CourseRepositoryException(e);
 		}
 	}
 
-	public List<TrainingCourse> getCourses() throws DaoException {
+	public List<TrainingCourse> getCourses() throws CourseRepositoryException {
 		List<TrainingCourse> courses = null;
 		try {
 			courses = reader.getCourses(DATA_PATH);
 		} catch (IOException e) {
-			throw new DaoException(e);
+			throw new CourseRepositoryException(e);
 		}
 		return courses;
 	}
 
-	public TrainingCourse getCourseById(int id) throws DaoException {
+	public TrainingCourse getCourseById(int id) throws CourseRepositoryException {
 		for (TrainingCourse course : getCourses()) {
 			if (id == course.getId()) {
 				return course;

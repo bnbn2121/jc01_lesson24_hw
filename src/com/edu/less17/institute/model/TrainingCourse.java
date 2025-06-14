@@ -8,21 +8,19 @@ import java.util.Objects;
 public class TrainingCourse {
 	private String specialization;
 	private int id;
-	private List<Student> students;
-	private List<Staff> staff;
+	private List<CourseMember> courseMembers;
+	
 
 	public TrainingCourse() {
 		this.specialization = "No specialization";
 		this.id = 0;
-		this.students = new ArrayList<Student>();
-		this.staff = new ArrayList<Staff>();
+		this.courseMembers = new ArrayList<CourseMember>();
 	}
 
-	public TrainingCourse(String specialization, int id, List<Student> students, List<Staff> staff) {
+	public TrainingCourse(String specialization, int id, List<CourseMember> courseMembers) {
 		this.specialization = specialization;
 		this.id = id;
-		this.students = students;
-		this.staff = staff;
+		this.courseMembers = courseMembers;
 	}
 
 	public String getSpecialization() {
@@ -41,68 +39,64 @@ public class TrainingCourse {
 		this.id = id;
 	}
 
-	public List<Student> getStudents() {
-		return students;
+	public List<CourseMember> getCourseMembers() {
+		return courseMembers;
 	}
 
-	public void setStudents(List<Student> students) {
-		this.students = students;
+	public void setCourseMembers(List<CourseMember> courseMembers) {
+		this.courseMembers = courseMembers;
 	}
-
-	public List<Staff> getStaff() {
-		return staff;
-	}
-
-	public void setStaff(List<Staff> staff) {
-		this.staff = staff;
-	}
-
-	public void addStudent(Student student) {
-		if (!students.contains(student)) {
-			students.add(student);
-		} else {
-			throw new RuntimeException("Не удалось добавить студента");
-		}
+	
+	public void addStudent(Listener listener) {
+		addMemberToCourse(listener);
 	}
 
 	public void addStaff(Staff newStaff) {
 		boolean isPresent = false;
-		for (Staff s : staff) {
-			if (s.getClass().isInstance(newStaff) || newStaff.getClass().isInstance(s)) {
+		for (CourseMember member : courseMembers) {
+			if (member.getClass().isInstance(newStaff) || newStaff.getClass().isInstance(member)) {
 				isPresent = true;
 				break;
 			}
 		}
 		if (!isPresent) {
-			staff.add(newStaff);
+			courseMembers.add(newStaff);
 		} else {
-			throw new RuntimeException("Не удалось добавить сотрудника");
+			throw new RuntimeException("This staff type is already present");
 		}
 	}
-
-	public String getInfo() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("Course data:\n");
-		sb.append(String.format("id: %d\n", id));
-		sb.append(String.format("specialization: %s\n", specialization));
-		sb.append("staff:\n");
-		for (Staff s : staff) {
-			Person p = (Person) s;
-			sb.append(p.getName()).append(" (").append(p.getClass().getSimpleName()).append(")").append("\n");
+	
+	private void addMemberToCourse(CourseMember courseMember) {
+		if (!courseMembers.contains(courseMember)) {
+			courseMembers.add(courseMember);
+		} else {
+			throw new RuntimeException("This person is already present");
 		}
-		sb.append("students:\n");
-		for (Person p : students) {
-			sb.append(p.getName()).append(" (").append(p.getClass().getSimpleName()).append(")").append("\n");
+	}
+	
+	public List<Listener> getListeners() {
+		List<Listener> listeners = new ArrayList<Listener>();
+		for (CourseMember member : courseMembers) {
+			if (member instanceof Listener) {
+				listeners.add((Listener) member);
+			}
 		}
-		return sb.toString();
+		return listeners;
+	}
+	
+	public List<Staff> getStaff() {
+		List<Staff> staff = new ArrayList<Staff>();
+		for (CourseMember member : courseMembers) {
+			if (member instanceof Staff) {
+				staff.add((Staff) member);
+			}
+		}
+		return staff;
 	}
 
 	public String conductLesson() {
 		StringBuilder sb = new StringBuilder();
-		for (CourseMember member : staff) {
-			sb.append(member.lessonAction()).append("\n");
-		}
-		for (CourseMember member : students) {
+		for (CourseMember member : courseMembers) {
 			sb.append(member.lessonAction()).append("\n");
 		}
 		sb.append("the lesson is done\n");
@@ -111,29 +105,29 @@ public class TrainingCourse {
 
 	public double getAverageCourseGrade() {
 		double sum = 0;
-		for (Student s : students) {
-			sum += s.getAverageGrade();
+		List<Listener> listeners= getListeners();
+		for (Listener listener : listeners) {
+			sum += listener.getAverageGrade();
 		}
-		double result = ((int) (sum / students.size() * 10)) / 10.0;
+		double result = ((int) (sum / listeners.size() * 10)) / 10.0;
 		return result;
 	}
 
-	public List<Student> getStudentsByAlphabet() {
-		List<Student> sortedStudents = new ArrayList<Student>(students);
-		Collections.sort(sortedStudents, new ComparatorByAlphabet());
-		return sortedStudents;
+	public List<Listener> getStudentsByAlphabet() {
+		List<Listener> sortedListeners = new ArrayList<Listener>(getListeners());
+		Collections.sort(sortedListeners, new ComparatorByAlphabet());
+		return sortedListeners;
 	}
 
-	public List<Student> getStudentsByAverageGrade() {
-		List<Student> sortedStudents = new ArrayList<Student>(students);
-		Collections.sort(sortedStudents, new ComparatorByAvearageGrade());
-
-		return sortedStudents;
+	public List<Listener> getStudentsByAverageGrade() {
+		List<Listener> sortedListeners = new ArrayList<Listener>(getListeners());
+		Collections.sort(sortedListeners, new ComparatorByAvearageGrade());
+		return sortedListeners;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, specialization, staff, students);
+		return Objects.hash(courseMembers, id, specialization);
 	}
 
 	@Override
@@ -145,15 +139,18 @@ public class TrainingCourse {
 		if (getClass() != obj.getClass())
 			return false;
 		TrainingCourse other = (TrainingCourse) obj;
-		return id == other.id && Objects.equals(specialization, other.specialization)
-				&& Objects.equals(staff, other.staff) && Objects.equals(students, other.students);
+		return Objects.equals(courseMembers, other.courseMembers) && id == other.id
+				&& Objects.equals(specialization, other.specialization);
 	}
 
 	@Override
 	public String toString() {
 		return "TrainingCourse [" + (specialization != null ? "specialization=" + specialization + ", " : "") + "id="
-				+ id + ", " + (students != null ? "students=" + students + ", " : "")
-				+ (staff != null ? "staff=" + staff : "") + "]";
+				+ id + ", " + (courseMembers != null ? "courseMembers=" + courseMembers : "") + "]";
 	}
+
+	
+
+	
 
 }

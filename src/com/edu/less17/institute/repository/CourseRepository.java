@@ -5,12 +5,12 @@ import java.util.List;
 import com.edu.less17.institute.model.TrainingCourse;
 
 public interface CourseRepository {
-	void saveCourse(TrainingCourse course) throws DaoException;
+	void saveCourse(TrainingCourse course) throws CourseRepositoryException;
 
-	void removeCourseById(int id) throws DaoException;
+	void removeCourseById(int id) throws CourseRepositoryException;
 
-	List<TrainingCourse> getCourses() throws DaoException;
+	List<TrainingCourse> getCourses() throws CourseRepositoryException;
 
-	TrainingCourse getCourseById(int id) throws DaoException;
+	TrainingCourse getCourseById(int id) throws CourseRepositoryException;
 
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Student extends Person {
+public class Student extends Person implements Listener{
 	private List<Integer> grades;
 	private String group;
 
@@ -46,6 +46,7 @@ public class Student extends Person {
 		return actionResult;
 	}
 
+	@Override
 	public double getAverageGrade() {
 		int sum = 0;
 		for (int grade : grades) {

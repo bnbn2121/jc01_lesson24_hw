@@ -3,6 +3,8 @@ package com.edu.less17.institute.util;
 import java.util.List;
 
 import com.edu.less17.institute.model.Administrator;
+import com.edu.less17.institute.model.CourseMember;
+import com.edu.less17.institute.model.Listener;
 import com.edu.less17.institute.model.Person;
 import com.edu.less17.institute.model.Staff;
 import com.edu.less17.institute.model.Student;
@@ -60,12 +62,16 @@ public class CourseParser {
 		sb.append(String.format("id: %d\n", course.getId()));
 		sb.append(String.format("specialization: %s\n", course.getSpecialization()));
 		sb.append("staff:\n");
-		for (Staff s : course.getStaff()) {
+		for (CourseMember s : course.getCourseMembers()) {
+			if (s instanceof Staff) {
 			sb.append(ParserFactory.getParser(s.getClass()).parseToString((Person) s)).append("\n");
+			}
 		}
 		sb.append("students:\n");
-		for (Student s : course.getStudents()) {
-			sb.append(ParserFactory.getParser(s.getClass()).parseToString(s)).append("\n");
+		for (CourseMember s : course.getCourseMembers()) {
+			if (s instanceof Listener) {
+			sb.append(ParserFactory.getParser(s.getClass()).parseToString((Person) s)).append("\n");
+			}
 		}
 		sb.append("***\n");
 		return sb.toString();
@@ -74,26 +80,15 @@ public class CourseParser {
 	public static String getStringData(List<TrainingCourse> courses) {
 		StringBuilder sb = new StringBuilder();
 		for (TrainingCourse course : courses) {
-			sb.append("Course data:\n");
-			sb.append(String.format("id: %d\n", course.getId()));
-			sb.append(String.format("specialization: %s\n", course.getSpecialization()));
-			sb.append("staff:\n");
-			for (Staff s : course.getStaff()) {
-				sb.append(ParserFactory.getParser(s.getClass()).parseToString((Person) s)).append("\n");
-			}
-			sb.append("students:\n");
-			for (Student s : course.getStudents()) {
-				sb.append(ParserFactory.getParser(s.getClass()).parseToString(s)).append("\n");
-			}
-			sb.append("***\n");
+			sb.append(getStringData(course));
 		}
 		return sb.toString();
 	}
 
-	public static String getStringStudents(List<Student> students) {
+	public static String getStringStudents(List<Listener> listeners) {
 		StringBuilder sb = new StringBuilder();
-		for (Student student : students) {
-			sb.append(ParserFactory.getParser(student.getClass()).parseToString(student)).append("\n");
+		for (Listener listener : listeners) {
+			sb.append(ParserFactory.getParser(listener.getClass()).parseToString((Person)listener)).append("\n");
 		}
 		return sb.toString();
 	}

@@ -34,6 +34,7 @@ public class ConsoleUI {
 			System.out.println("0.Exit");
 
 			int input = userIntInput("enter value:", 6);
+			System.out.println();
 			if (input == 0) {
 				System.out.println("App stopped");
 				break;

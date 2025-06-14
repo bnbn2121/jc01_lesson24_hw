@@ -2,7 +2,8 @@ package com.edu.less17.institute.service;
 
 import java.util.List;
 
-import com.edu.less17.institute.model.Staff;
+import com.edu.less17.institute.model.CourseMember;
+import com.edu.less17.institute.model.Listener;
 import com.edu.less17.institute.model.Student;
 import com.edu.less17.institute.model.TrainingCourse;
 import com.edu.less17.institute.repository.CourseRepository;
@@ -12,8 +13,7 @@ public interface Service {
 
 	public void setCourseRepository(CourseRepository courses);
 
-	public TrainingCourse createTrainingCourse(String specialization, int id, List<Student> students,
-			List<Staff> staff);
+	public TrainingCourse createTrainingCourse(String specialization, int id, List<CourseMember> courseMembers);
 
 	public TrainingCourse createTrainingCourse();
 
@@ -25,9 +25,9 @@ public interface Service {
 
 	public String conductLesson(int id) throws ServiceException;
 
-	public List<Student> getStudentsByAlphabet(TrainingCourse course);
+	public List<Listener> getStudentsByAlphabet(TrainingCourse course);
 
-	public List<Student> getStudentsByAverageGrade(TrainingCourse course);
+	public List<Listener> getStudentsByAverageGrade(TrainingCourse course);
 
 	public TrainingCourse getCourseById(int idCourse) throws ServiceException;
 
