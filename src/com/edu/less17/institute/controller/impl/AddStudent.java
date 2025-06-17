@@ -9,6 +9,7 @@ import com.edu.less17.institute.service.ServiceProvider;
 import com.edu.less17.institute.util.CommandParser;
 import com.edu.less17.institute.util.ParserFactory;
 import com.edu.less17.institute.util.PersonParser;
+import com.edu.less17.institute.util.ParserFactory.PersonType;
 
 public class AddStudent implements Command {
 	private Service service = ServiceProvider.getService();
@@ -18,7 +19,7 @@ public class AddStudent implements Command {
 		String response = null;
 		String data = CommandParser.getCommandData(request);
 		String[] dataArray = data.split("\n");
-		PersonParser parser = ParserFactory.getParser(Student.class);
+		PersonParser parser = ParserFactory.getParser(PersonType.STUDENT);
 		Student student = (Student) parser.parseFromString(dataArray[0]);
 		int courseId = Integer.valueOf(dataArray[1].trim());
 		try {

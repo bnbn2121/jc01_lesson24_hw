@@ -3,28 +3,39 @@ package com.edu.less17.institute.util;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.edu.less17.institute.model.Administrator;
-import com.edu.less17.institute.model.Student;
-import com.edu.less17.institute.model.Teacher;
-
 public class ParserFactory {
 
-	private static Map<Class<?>, PersonParser> parserMap = new HashMap<>();
+	private static Map<PersonType, PersonParser> parserMap = new HashMap<>();
+	
+	public static enum PersonType {
+		STUDENT,
+		TEACHER,
+		ADMINISTRATOR;
+		
+		public static boolean contains(String value) {
+	        for (PersonType type : PersonType.values()) {
+	            if (type.name().equals(value)) {
+	                return true;
+	            }
+	        }
+	        return false;
+	    }
+	}
 	
 	static {
-		parserMap.put(Student.class, new StudentParser());
-		parserMap.put(Administrator.class, new AdministratorParser());
-		parserMap.put(Teacher.class, new TeacherParser());
+		parserMap.put(PersonType.STUDENT, new StudentParser());
+		parserMap.put(PersonType.ADMINISTRATOR, new AdministratorParser());
+		parserMap.put(PersonType.TEACHER, new TeacherParser());
 	}
 
 	private ParserFactory() {
 	}
 	
-	public static void registerNewParser(Class<?> personClass, PersonParser parser) {
-		parserMap.put(personClass, parser);
+	public static void registerNewParser(PersonType personType, PersonParser parser) {
+		parserMap.put(personType, parser);
 	}
 
-	public static PersonParser getParser(Class<?> personClass) {
-		return parserMap.get(personClass);
+	public static PersonParser getParser(PersonType personType) {
+		return parserMap.get(personType);
 	}
 }

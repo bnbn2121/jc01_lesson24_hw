@@ -2,14 +2,12 @@ package com.edu.less17.institute.util;
 
 import java.util.List;
 
-import com.edu.less17.institute.model.Administrator;
 import com.edu.less17.institute.model.CourseMember;
 import com.edu.less17.institute.model.Listener;
 import com.edu.less17.institute.model.Person;
 import com.edu.less17.institute.model.Staff;
-import com.edu.less17.institute.model.Student;
-import com.edu.less17.institute.model.Teacher;
 import com.edu.less17.institute.model.TrainingCourse;
+import com.edu.less17.institute.util.ParserFactory.PersonType;
 
 public class CourseParser {
 	private CourseParser() {
@@ -31,22 +29,11 @@ public class CourseParser {
 				course.setSpecialization(oneLine.substring(16));
 				continue;
 			}
-			if (oneLine.startsWith("Student")) {
-				Student student = null;
-				student = (Student) ParserFactory.getParser(Student.class).parseFromString(oneLine);
-				course.addStudent(student);
-				continue;
-			}
-			if (oneLine.startsWith("Teacher")) {
-				Teacher teacher = null;
-				teacher = (Teacher) ParserFactory.getParser(Teacher.class).parseFromString(oneLine);
-				course.addStaff(teacher);
-				continue;
-			}
-			if (oneLine.startsWith("Administrator")) {
-				Administrator administrator = null;
-				administrator = (Administrator) ParserFactory.getParser(Administrator.class).parseFromString(oneLine);
-				course.addStaff(administrator);
+			String startLineWith = oneLine.split("\\|")[0].trim().toUpperCase();
+			if (PersonType.contains(startLineWith)) {
+				CourseMember member = ParserFactory.getParser(PersonType.valueOf(startLineWith))
+						.parseFromString(oneLine);
+				course.addCourseMember(member);
 				continue;
 			}
 		}
@@ -64,13 +51,15 @@ public class CourseParser {
 		sb.append("staff:\n");
 		for (CourseMember s : course.getCourseMembers()) {
 			if (s instanceof Staff) {
-			sb.append(ParserFactory.getParser(s.getClass()).parseToString((Person) s)).append("\n");
+				PersonType type = PersonType.valueOf(s.getClass().getSimpleName().toUpperCase());
+				sb.append(ParserFactory.getParser(type).parseToString((Person) s)).append("\n");
 			}
 		}
 		sb.append("students:\n");
 		for (CourseMember s : course.getCourseMembers()) {
 			if (s instanceof Listener) {
-			sb.append(ParserFactory.getParser(s.getClass()).parseToString((Person) s)).append("\n");
+				PersonType type = PersonType.valueOf(s.getClass().getSimpleName().toUpperCase());
+				sb.append(ParserFactory.getParser(type).parseToString((Person) s)).append("\n");
 			}
 		}
 		sb.append("***\n");
@@ -88,7 +77,8 @@ public class CourseParser {
 	public static String getStringStudents(List<Listener> listeners) {
 		StringBuilder sb = new StringBuilder();
 		for (Listener listener : listeners) {
-			sb.append(ParserFactory.getParser(listener.getClass()).parseToString((Person)listener)).append("\n");
+			PersonType type = PersonType.valueOf(listener.getClass().getSimpleName().toUpperCase());
+			sb.append(ParserFactory.getParser(type).parseToString((Person) listener)).append("\n");
 		}
 		return sb.toString();
 	}

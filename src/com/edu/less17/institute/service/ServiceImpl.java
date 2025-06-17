@@ -99,7 +99,7 @@ public class ServiceImpl implements Service {
 	}
 
 	public void addStudent(Student student, TrainingCourse course) {
-		course.addStudent(student);
+		course.addCourseMember(student);
 	}
 
 }

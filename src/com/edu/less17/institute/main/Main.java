@@ -18,7 +18,7 @@ import com.edu.less17.institute.util.CourseParser;
 public class Main {
 
 	public static void main(String[] args) throws ServiceException {
-
+		
 		List<CourseMember> courseMembers = new ArrayList<>();
 		
 		// создаем персонал
@@ -50,7 +50,7 @@ public class Main {
 
 		// проводим изменение данных в курсе
 		course2.setId(3);
-		course2.addStudent(new Student("Анна", "НД-09-1"));
+		course2.addCourseMember(new Student("Анна", "НД-09-1"));
 
 		// обфусцируем данные студента
 		Student student = (Student) course2.getListeners().get(1);

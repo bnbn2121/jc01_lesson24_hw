@@ -47,22 +47,22 @@ public class TrainingCourse {
 		this.courseMembers = courseMembers;
 	}
 	
-	public void addStudent(Listener listener) {
-		addMemberToCourse(listener);
-	}
-
-	public void addStaff(Staff newStaff) {
-		boolean isPresent = false;
-		for (CourseMember member : courseMembers) {
-			if (member.getClass().isInstance(newStaff) || newStaff.getClass().isInstance(member)) {
-				isPresent = true;
-				break;
-			}
-		}
-		if (!isPresent) {
-			courseMembers.add(newStaff);
+	public void addCourseMember(CourseMember member) {
+		if (member instanceof Listener) {
+			addMemberToCourse(member);
 		} else {
-			throw new RuntimeException("This staff type is already present");
+			boolean isPresent = false;
+			for (CourseMember staffMember : courseMembers) {
+				if (staffMember.getClass().isInstance(member) || member.getClass().isInstance(staffMember)) {
+					isPresent = true;
+					break;
+				}
+			}
+			if (!isPresent) {
+				courseMembers.add(member);
+			} else {
+				throw new RuntimeException("This staff type is already present");
+			}
 		}
 	}
 	
